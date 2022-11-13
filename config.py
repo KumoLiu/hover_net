@@ -20,7 +20,7 @@ class Config(object):
 
         model_name = "hovernet"
         model_mode = "original" # choose either `original` or `fast`
-        model = 'raw'
+        model_type = 'raw' # "raw"
 
         if model_mode not in ["original", "fast"]:
             raise Exception("Must use either `original` or `fast` as model mode")
@@ -67,4 +67,4 @@ class Config(object):
         module = importlib.import_module(
             "models.%s.opt" % model_name
         )
-        self.model_config = module.get_config(nr_type, model_mode, model)
+        self.model_config = module.get_config(nr_type, model_mode, model_type)

@@ -20,7 +20,7 @@ from .run_desc import proc_valid_step_output, train_step, valid_step, viz_step_o
 
 # TODO: training config only ?
 # TODO: switch all to function name String for all option
-def get_config(nr_type, mode):
+def get_config(nr_type, mode, model_type):
     return {
         # ------------------------------------------------------------------
         # ! All phases have the same number of run engine
@@ -32,7 +32,7 @@ def get_config(nr_type, mode):
                     "net": {
                         "desc": lambda: create_model(
                             input_ch=3, nr_types=nr_type, 
-                            freeze=True, mode=mode
+                            freeze=True, mode=mode, model_type=model_type
                         ),
                         "optimizer": [
                             optim.Adam,
@@ -52,7 +52,7 @@ def get_config(nr_type, mode):
                         },
                         # path to load, -1 to auto load checkpoint from previous phase,
                         # None to start from scratch
-                        "pretrained": "../pretrained/ImageNet-ResNet50-Preact_pytorch.tar",
+                        "pretrained": "/home/yunliu/Workspace/Data/CoNSeP/ImageNet-ResNet50-Preact_pytorch.tar",
                         # 'pretrained': None,
                     },
                 },
@@ -66,7 +66,7 @@ def get_config(nr_type, mode):
                     "net": {
                         "desc": lambda: create_model(
                             input_ch=3, nr_types=nr_type, 
-                            freeze=False, mode=mode
+                            freeze=False, mode=mode, model_type=model_type
                         ),
                         "optimizer": [
                             optim.Adam,

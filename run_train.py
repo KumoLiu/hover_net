@@ -34,7 +34,7 @@ from torch.nn import DataParallel  # TODO: switch to DistributedDataParallel
 from torch.utils.data import DataLoader
 
 from config import Config
-from dataloader.train_loader import FileLoader
+from dataloader.train_loader import FileLoader, get_monai_dataset
 from misc.utils import rm_n_mkdir
 from run_utils.engine import RunEngine
 from run_utils.utils import (
@@ -112,7 +112,7 @@ class TrainManager(Config):
             % (run_mode, "%s_dir_list" % run_mode)
         )
         print("Dataset %s: %d" % (run_mode, len(file_list)))
-        input_dataset = FileLoader(
+        input_dataset_ = FileLoader(
             file_list,
             mode=run_mode,
             with_type=self.type_classification,
@@ -121,14 +121,26 @@ class TrainManager(Config):
             **self.shape_info[run_mode]
         )
 
+        input_dataset = get_monai_dataset(file_list, run_mode)
+
         dataloader = DataLoader(
             input_dataset,
             num_workers=nr_procs,
             batch_size=batch_size * self.nr_gpus,
             shuffle=run_mode == "train",
             drop_last=run_mode == "train",
+            # worker_init_fn=worker_init_fn,
+        )
+
+        dataloader_ = DataLoader(
+            input_dataset_,
+            num_workers=nr_procs,
+            batch_size=batch_size * self.nr_gpus,
+            shuffle=run_mode == "train",
+            drop_last=run_mode == "train",
             worker_init_fn=worker_init_fn,
         )
+        print('len dataloader', len(dataloader), len(dataloader_))
         return dataloader
 
     ####

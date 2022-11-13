@@ -127,6 +127,7 @@ if __name__ == '__main__':
             'model_args' : {
                 'nr_types'   : nr_types,
                 'mode'       : args['model_mode'],
+                'model_type'       : "raw",
             },
             'model_path' : args['model_path'],
         },

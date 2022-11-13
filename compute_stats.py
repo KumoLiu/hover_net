@@ -60,8 +60,8 @@ def run_nuclei_type_stat(pred_dir, true_dir, type_uid_list=None, exhaustive=True
             true_inst_type = np.array([0])
 
         # * for converting the GT type in CoNSeP
-        # true_inst_type[(true_inst_type == 3) | (true_inst_type == 4)] = 3
-        # true_inst_type[(true_inst_type == 5) | (true_inst_type == 6) | (true_inst_type == 7)] = 4
+        true_inst_type[(true_inst_type == 3) | (true_inst_type == 4)] = 3
+        true_inst_type[(true_inst_type == 5) | (true_inst_type == 6) | (true_inst_type == 7)] = 4
 
         pred_info = sio.loadmat(os.path.join(pred_dir, basename + ".mat"))
         # dont squeeze, may be 1 instance exist
