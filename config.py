@@ -20,6 +20,7 @@ class Config(object):
 
         model_name = "hovernet"
         model_mode = "original" # choose either `original` or `fast`
+        model = 'raw'
 
         if model_mode not in ["original", "fast"]:
             raise Exception("Must use either `original` or `fast` as model mode")
@@ -45,14 +46,14 @@ class Config(object):
                 raise Exception("If using `fast` mode, input shape must be [256,256] and output shape must be [164,164]")
 
         self.dataset_name = "consep" # extracts dataset info from dataset.py
-        self.log_dir = "logs/" # where checkpoints will be saved
+        self.log_dir = "/home/yunliu/Workspace/Data/CoNSeP/logs/" # where checkpoints will be saved
 
         # paths to training and validation patches
         self.train_dir_list = [
-            "train_patches_path"
+            "/home/yunliu/Workspace/Data/CoNSeP/Prepared/consep/train/540x540_164x164"
         ]
         self.valid_dir_list = [
-            "valid_patches_path"
+            "/home/yunliu/Workspace/Data/CoNSeP/Prepared/consep/valid/540x540_164x164"
         ]
 
         self.shape_info = {
@@ -66,4 +67,4 @@ class Config(object):
         module = importlib.import_module(
             "models.%s.opt" % model_name
         )
-        self.model_config = module.get_config(nr_type, model_mode)
+        self.model_config = module.get_config(nr_type, model_mode, model)

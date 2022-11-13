@@ -29,21 +29,20 @@ if __name__ == "__main__":
     # Name of dataset - use Kumar, CPM17 or CoNSeP.
     # This used to get the specific dataset img and ann loading scheme from dataset.py
     dataset_name = "consep"
-    save_root = "dataset/training_data/%s/" % dataset_name
+    save_root = "/home/yunliu/Workspace/Data/CoNSeP/Train/Prepared"
 
     # a dictionary to specify where the dataset path should be
     dataset_info = {
         "train": {
-            "img": (".png", "dataset/CoNSeP/Train/Images/"),
-            "ann": (".mat", "dataset/CoNSeP/Train/Labels/"),
+            "img": (".png", "/home/yunliu/Workspace/Data/CoNSeP/Train/Images"),
+            "ann": (".mat", "/home/yunliu/Workspace/Data/CoNSeP/Train/Labels"),
         },
         "valid": {
-            "img": (".png", "dataset/CoNSeP/Test/Images/"),
-            "ann": (".mat", "dataset/CoNSeP/Test/Labels/"),
+            "img": (".png", "/home/yunliu/Workspace/Data/CoNSeP/Test/Images"),
+            "ann": (".mat", "/home/yunliu/Workspace/Data/CoNSeP/Test/Labels"),
         },
     }
 
-    patterning = lambda x: re.sub("([\[\]])", "[\\1]", x)
     parser = get_dataset(dataset_name)
     xtractor = PatchExtractor(win_size, step_size)
     for split_name, split_desc in dataset_info.items():
@@ -59,7 +58,8 @@ if __name__ == "__main__":
             step_size[0],
             step_size[1],
         )
-        file_list = glob.glob(patterning("%s/*%s" % (ann_dir, ann_ext)))
+        file_list = glob.glob(os.path.join(ann_dir, f"*{ann_ext}"))
+        print(os.path.join(ann_dir, f"*{ann_ext}"))
         file_list.sort()  # ensure same ordering across platform
 
         rm_n_mkdir(out_dir)
