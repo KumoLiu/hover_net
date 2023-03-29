@@ -71,7 +71,7 @@ class InferManager(object):
             except:
                 net.load_state_dict(torch.load(self.method["model_path"]))
         else:
-            net.load_state_dict(torch.load(self.method["model_path"]))
+            net.load_state_dict(torch.load(self.method["model_path"])['model'])
         net = torch.nn.DataParallel(net)
         net = net.to("cuda")
 

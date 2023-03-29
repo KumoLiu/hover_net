@@ -20,7 +20,7 @@ class Config(object):
 
         model_name = "hovernet"
         model_mode = "original" # choose either `original` or `fast`
-        model_type = 'raw' # "raw"
+        model_type = 'monai' # "raw"
 
         if model_mode not in ["original", "fast"]:
             raise Exception("Must use either `original` or `fast` as model mode")
